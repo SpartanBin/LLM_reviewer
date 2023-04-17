@@ -5,10 +5,12 @@
 # 重要羊驼大模型发布时间表
 
 - 2023-02-24 Meta AI发布[LLaMA](#llama)
+- 2023-03-10 TOGETHER发布[OpenChatKit](#openchatkit)
 - 2023-03-13 清华数据挖掘研究团队（THUDM）发布[ChatGLM-6B](#chatglm-6b)
 - 2023-03-13 Stanford发布[Alpaca](#alpaca)
 - 2023-03-14 Eric J. Wang（人肉了下，发现人在Stanford，什么身份不清楚）发布[Alpaca-LoRA](#alpaca-lora)
 - 2023-03-19 一个队伍（from UC Berkeley、CMU, Stanford, and UC San Diego）发布[Vicuna](#vicuna)
+- 2023-03-23 元语智能发布[ChatYuan](#chatyuan)
 - 2023-03-25 Databricks发布[Dolly](#dolly)
 - 2023-03-27 哈工大科大讯飞联合实验室（HFL）发布 [Chinese-LLaMA-Alpaca](#chinese-llama-alpaca)
 - 2023-03-27 香港科技大学统计机器学习实验室（HKUST）发布 [LMFlow](#lmflow)
@@ -34,6 +36,17 @@
 - 13B版在很多测试上优于GPT3（175B）
 - 65B版与许多当时的最优模型相比都具有竞争力，比如Chinchilla-70B和PaLM-540B
 - 核心思想是说***同样预算***的情况下，用小模型+大量数据，可以得到比大模型+少量数据更好的效果，虽然训练时间更长
+
+## OpenChatKit
+
+[代码仓库](https://github.com/togethercomputer/OpenChatKit)
+
+|   是否开源代码    | 是否开源训练数据 | 是否开源模型参数 |     训练数据大小      | 模型参数大小 |   训练设备    | 训练时长 |
+|:-----------:|:--------:|:--------:|:---------------:|:------:|:---------:|:----:|
+| 是 |    是     |    是     | 43M | 7B、20B | 16 * A100 |  未知  |
+
+- 有两个版本，微调自[GPT-NeoX-20B](https://github.com/EleutherAI/gpt-neox)的GPT-NeoXT-Chat-Base-20B和微调自[Pythia-6.9B-deduped](https://github.com/EleutherAI/pythia)的Pythia-Chat-Base-7B
+- 微调训练数据是[OIG](https://huggingface.co/datasets/laion/OIG)，由[Together](https://www.together.xyz/), [LAION](https://laion.ai/), 和[Ontocord.ai](https://www.ontocord.ai/)共同制作，作者还在持续收集数据，该数据还在持续更新中
 
 ## ChatGLM-6B
 
@@ -84,6 +97,18 @@
 - 作者提到自己的13B模型已经达到了chatgpt 90%的能力水平，且和Alpaca对比生成的结果内容更丰富，结构更准确，但是和其他‘小’大模型一样，推理能力和数学能力不太行
 - 提到一个OpenAI的API [moderation](https://platform.openai.com/docs/guides/moderation/overview)可以用来过滤到用户的不恰当输入
 - 提供了一个在线与大语言模型对话的[demo](https://chat.lmsys.org/)，里面有Vicuna、Koala、Dolly、ChatGLM、Alpaca、LLaMA这几个模型
+
+## ChatYuan
+
+[代码仓库](https://github.com/clue-ai/ChatYuan)
+
+| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数 | 训练数据大小 | 模型参数大小 | 训练设备 | 训练时长 |
+|:------:|:--------:|:--------:|:------:|:------:|:----:|:----:|
+|   是    |    否     |    是     |   未知   |   未知   |  未知  |  未知  |
+
+- ChatYuan-large-v2应该是微调自此团队的预训练模型[PromptCLUE](https://github.com/clue-ai/PromptCLUE)，该预训练模型开源了代码、数据和参数（base版），数据使用1.5万亿中文token，亿级中文任务数据上完成训练，训练任务超过150+
+- 该项目开源了他的微调代码，和微调输入的数据格式，使用起来比较方便，说的技术路线改进自ChatYuan-large-v1，没有找到ChatYuan-large-v1的相关信息
+- 看了一下demo效果，感觉很不错
 
 ## Dolly
 
