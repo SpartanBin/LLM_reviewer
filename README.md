@@ -1,6 +1,6 @@
 # 先写结论
 
-- xxx
+- 2023-04-18: 其实众多微调方法或框架使用技术都类似，且有一半小羊驼模型都微调自[LLaMA](#llama)，决定模型质量的因素主要是数据量、数据质量、算力成本，如果要制作自己专业领域的羊驼模型，个人认为应以LLaMA作为预训练模型，收集尽可能多的中英文语料（假设你的模型要部署到中文生产环境），对LLaMA做再训练，这一步如果效果不好，可以考虑用[ChatYuan](#chatyuan)替代，然后用[Task Tuning](#lmflow)和专业领域数据进行微调，最后收集指令微调数据，并进行指令微调，[LMFlow](#lmflow)和[DeepSpeed-Chat](#deepspeed-chat)都可以成为很好的微调框架
 
 # 重要羊驼大模型发布时间表
 
@@ -16,6 +16,7 @@
 - 2023-03-27 香港科技大学统计机器学习实验室（HKUST）发布 [LMFlow](#lmflow)
 - 2023-04-03 Berkeley Artificial Intelligence Research Lab (BAIR) of UC Berkeley发布[Koala](#koala)
 - 2023-04-06 微软研究院（Microsoft Research）发布[GPT-4-LLM](#gpt-4-llm)
+- 2023-04-12 微软发布[DeepSpeed-Chat](#deepspeed-chat)
 
 # 其他的一些羊驼大模型发布时间表和信息
 
@@ -170,5 +171,42 @@
 |:------:|:--------:|:--------:|:------:|:------:|:--------:|:----:|
 |   否    |    是     |    否     |   未知   | 未知 | 未知 |  未知  |
 
-- 微软发布的小羊驼模型，目前只开源了数据，数据是中英双语的，持续关注中
+- 微软研究院发布的小羊驼模型，目前只开源了数据，数据是中英双语的，持续关注中
 - 除了使用self-instruct tuning训练了一个小羊驼，还生成了一些比较数据（来自GPT3.5、4、OPT1.3B）来训练了一个打分模型（reward models），用这个打分模型去量化GPT4和小羊驼的差距
+
+## DeepSpeed-Chat
+
+[代码仓库](https://github.com/microsoft/DeepSpeedExamples/tree/master/applications/DeepSpeed-Chat)
+
+| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数 | 训练数据大小 | 模型参数大小 |   训练设备   | 训练时长 |
+|:------:|:--------:|:--------:|:------:|:------:|:--------:|:----:|
+|   是    |    否     |    否     |   未知   | 未知 | 未知 |  未知  |
+
+- 微软发布的微调框架，用[DeepSpeed](https://github.com/microsoft/DeepSpeed)实现了[论文InstructGPT](https://arxiv.org/abs/2203.02155)中的监督微调、奖励函数模型微调、强化学习人类反馈（Reinforcement Learning Human Feedback, RLHF），作者说微软研发的DeepSpeed可以显著加速训练（可达15倍速度），并且还可以显著加速推理，做到高吞吐量和低延迟
+- 目前支持以下预训练模型：
+
+| model family                                                   | size range  |
+|----------------------------------------------------------------|-------------|
+| [opt](https://huggingface.co/models?other=opt)                 | 0.1B - 66B  |
+| [bloom](https://huggingface.co/models?other=bloom)             | 0.3B - 176B |
+| [gpt\_neox](https://huggingface.co/models?other=gpt_neox)      | 1.3B - 20B  |
+| [gptj](https://huggingface.co/models?other=gptj)               | 1.4B - 6B   |
+| [gpt\_neo](https://huggingface.co/models?other=gpt_neo)        | 0.1B - 2.7B |
+| [gpt2](https://huggingface.co/models?other=gpt2)               | 0.3B - 1.5B |
+| [codegen](https://huggingface.co/Salesforce/codegen-16B-multi) | 0.35b - 16B |
+
+正在开发对LLaMA的支持
+
+- 以下是他加速RLHF训练的例子：
+
+| GPU SKUs      | OPT-1.3B      | OPT-6.7B       | OPT-13.2B       | OPT-30B       | OPT-66B           | Bloom-175B      |
+|---------------|---------------|----------------|-----------------|---------------|-------------------|-----------------|
+| 1x V100 32G   | 1.8 days      |                |                 |               |                   |                 |
+| 1x A6000 48G  | 1.1 days      | 5.6 days       |                 |               |                   |                 |
+| 1x A100 40G   | 15.4 hrs      | 3.4 days       |                 |               |                   |                 |
+| 1x A100 80G   | 11.7 hrs      | 1.7 days       | 4.9 days        |               |                   |                 |
+| 8x A100 40G   | 2 hrs         | 5.7 hrs        | 10.8 hrs        | 1.85 days     |                   |                 |
+| 8x A100 80G   | 1.4 hrs($45)  | 4.1 hrs ($132) | 9 hrs ($290)    | 18 hrs ($580) | 2.1 days ($1620)  |                 |
+| 64x A100 80G  | 31 minutes    | 51 minutes     | 1.25 hrs ($320) | 4 hrs ($1024) | 7.5 hrs ($1920)    | 20 hrs ($5120) |
+
+以上RLHF训练使用了135M tokens的数据，由6个开源数据集组成[rm-static](https://huggingface.co/datasets/Dahoas/rm-static)、[full-hh-rlhf](https://huggingface.co/datasets/Dahoas/full-hh-rlhf)、[synthetic-instruct-gptj-pairwise](https://huggingface.co/datasets/Dahoas/synthetic-instruct-gptj-pairwise)、[rlhf-reward-datasets](https://huggingface.co/datasets/yitingxie/rlhf-reward-datasets)、[webgpt_comparisons](https://huggingface.co/datasets/openai/webgpt_comparisons)、[SHP](https://huggingface.co/datasets/stanfordnlp/SHP)
