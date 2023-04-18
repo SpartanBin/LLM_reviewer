@@ -210,3 +210,11 @@
 | 64x A100 80G  | 31 minutes    | 51 minutes     | 1.25 hrs ($320) | 4 hrs ($1024) | 7.5 hrs ($1920)    | 20 hrs ($5120) |
 
 以上RLHF训练使用了135M tokens的数据，由6个开源数据集组成[rm-static](https://huggingface.co/datasets/Dahoas/rm-static)、[full-hh-rlhf](https://huggingface.co/datasets/Dahoas/full-hh-rlhf)、[synthetic-instruct-gptj-pairwise](https://huggingface.co/datasets/Dahoas/synthetic-instruct-gptj-pairwise)、[rlhf-reward-datasets](https://huggingface.co/datasets/yitingxie/rlhf-reward-datasets)、[webgpt_comparisons](https://huggingface.co/datasets/openai/webgpt_comparisons)、[SHP](https://huggingface.co/datasets/stanfordnlp/SHP)
+
+# 数据集整理
+
+xxx
+
+# TODO
+
+- [ ] 整理收集归纳中英文语料数据集，明确每个数据集的最佳用途（适合作预训练或任务微调或指令微调或RLHF等）
