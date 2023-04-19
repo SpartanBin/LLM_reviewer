@@ -2,6 +2,15 @@
 
 - 2023-04-18: 其实众多微调方法或框架使用技术都类似，且有一半小羊驼模型都微调自[LLaMA](#llama)，决定模型质量的因素主要是数据量、数据质量、算力成本，如果要制作自己专业领域的羊驼模型，个人认为应以LLaMA作为预训练模型，收集尽可能多的中英文语料（假设你的模型要部署到中文生产环境），对LLaMA做再训练，这一步如果效果不好，可以考虑用[ChatYuan](#chatyuan)替代，然后用[Task Tuning](#lmflow)和专业领域数据进行微调，最后收集指令微调数据，并进行指令微调，[LMFlow](#lmflow)和[DeepSpeed-Chat](#deepspeed-chat)都可以成为很好的微调框架
 
+# 一些关于大语言模型的名词和实验现象
+
+- Scaling (Training compute, FLOPs): 代表模型的规模，等于 α * model_size * training_tokens，α为系数，model_size为模型参数量，training_tokens为数据量（1000个tokens差不多为750个词语）
+- [Scaling laws](https://arxiv.org/abs/2001.08361): 如果你希望提升模型的表现，就必须增大Scaling (模型大小，数据大小，计算资源大小)，[open ai 的gpt-4技术报告](https://arxiv.org/abs/2303.08774)显示，模型的表现与训练时间的关系是可预测的，也就是说，在模型刚开始训练时，就可以知道模型最终训练结束的表现
+- 有137种能力是大Scaling才有的，而小Scaling没有，见[博客](https://bounded-regret.ghost.io/emergent-deception-optimization/)
+- few-shot prompting（few-shot prompting是指给模型的输入中加入一些与当前模型要做的任务相似的例子）在小Scaling上没有什么用，但是在大Scaling上有用
+- RLHF对小Scaling是有害的，但对大Scaling是有益的，见[论文](https://arxiv.org/abs/2204.05862)
+- [The Inverse Scaling Prize](https://github.com/inverse-scaling/prize)提出了11种任务，这11种任务对于一般的大语言模型来说，都是随着Scaling增大，效果反而会变差的。[Inverse scaling can become U-shaped](https://arxiv.org/abs/2211.02011)发现如果使用[chain-of-thought prompting](https://arxiv.org/abs/2201.11903)（简单来说就是在给模型的提示中加入推理，让它‘分步思考’）可以使部分任务从随着Scaling变大一直变差，变为表现成U型，意思是先变差后变好
+
 # 重要羊驼大模型发布时间表
 
 - 2023-02-24 Meta AI发布[LLaMA](#llama)
