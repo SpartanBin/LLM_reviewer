@@ -10,6 +10,7 @@
 - few-shot prompting（few-shot prompting是指给模型的输入中加入一些与当前模型要做的任务相似的例子）在小Scaling上没有什么用，但是在大Scaling上有用
 - RLHF对小Scaling是有害的，但对大Scaling是有益的，见[论文](https://arxiv.org/abs/2204.05862)
 - [The Inverse Scaling Prize](https://github.com/inverse-scaling/prize)提出了11种任务，这11种任务对于一般的大语言模型来说，都是随着Scaling增大，效果反而会变差的。[Inverse scaling can become U-shaped](https://arxiv.org/abs/2211.02011)发现如果使用[chain-of-thought prompting](https://arxiv.org/abs/2201.11903)（简单来说就是在给模型的提示中加入推理，让它‘分步思考’）可以使部分任务从随着Scaling变大一直变差，变为表现成U型，意思是先变差后变好
+- 对于哈尔滨工业大学的[ChatGPT 调研报告](https://github.com/DeepTecher/awesome-ChatGPT-resource-zh/blob/main/pdfs/230311-%E5%93%88%E5%B0%94%E6%BB%A8%E5%B7%A5%E4%B8%9A%E5%A4%A7%E5%AD%A6-ChatGPT%E8%B0%83%E7%A0%94%E6%8A%A5%E5%91%8A.pdf)内容小总结: 1. 报告里提到ChatGPT在Scaling达到一定尺度的情况下，效果出现激增，打破了Scaling laws的规律(线性增强)，认为是因为加入了很多代码作为训练语料，因代码语言的特性可以强化模型的推理(reason)能力，[论文](https://arxiv.org/abs/2211.09110)发现训练数据中含有代码的模型具有很强的语言推理能力，代码预训练与思维链Chain-of-Thought（COT）表现息息相关，在预训练时使用代码数据成为越来越多研究者的共识；2. GPT式的decoder模型的预训练方法相当于是对一句话中下个词语的预测(分类)，这种方式可以方便生成任意长度文本，这种方式类似Word2Vec在做词向量编码，可能其能够把不同语言的相同语义投影到高维空间中的相同位置；3. 指令精调是提示学习(Prompt Learning)的加强版，其作用在于让模型学习人类对话交互的模式（与人类行为‘对齐’），且能让他有能力泛化到没见过的分布中；4. RLHF是让模型了解人类的‘意图’，让模型的回答是人类希望看到的；5. 部署大模型的方式是模型并行、数据并行的混用；6. 提到Nvidia的[Megatron-LM](https://github.com/NVIDIA/Megatron-LM)和Microsoft的[DeepSpeed](https://github.com/microsoft/DeepSpeed)，应该都可以作为很好的部署框架；7. 在第四章提到巨量预训练数据集！！！；8. 提到构建指令精调数据集需要设计指令模板（针对不同任务），且覆盖不同类型的数据，逻辑推理任务标注时可以用COT，能够提高表现；9. 第五章提到评价方式，在需要评估自己的大模型时可以回来仔细参考
 
 # 重要羊驼大模型发布时间表
 
