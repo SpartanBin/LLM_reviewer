@@ -27,6 +27,7 @@
 - 2023-04-03 Berkeley Artificial Intelligence Research Lab (BAIR) of UC Berkeley发布[Koala](#koala)
 - 2023-04-06 微软研究院（Microsoft Research）发布[GPT-4-LLM](#gpt-4-llm)
 - 2023-04-12 微软发布[DeepSpeed-Chat](#deepspeed-chat)
+- 2023-04-21 复旦发布[MOSS](#moss)
 
 # 其他的一些羊驼大模型发布时间表和信息
 
@@ -220,6 +221,20 @@
 | 64x A100 80G  | 31 minutes    | 51 minutes     | 1.25 hrs ($320) | 4 hrs ($1024) | 7.5 hrs ($1920)    | 20 hrs ($5120) |
 
 以上RLHF训练使用了135M tokens的数据，由6个开源数据集组成[rm-static](https://huggingface.co/datasets/Dahoas/rm-static)、[full-hh-rlhf](https://huggingface.co/datasets/Dahoas/full-hh-rlhf)、[synthetic-instruct-gptj-pairwise](https://huggingface.co/datasets/Dahoas/synthetic-instruct-gptj-pairwise)、[rlhf-reward-datasets](https://huggingface.co/datasets/yitingxie/rlhf-reward-datasets)、[webgpt_comparisons](https://huggingface.co/datasets/openai/webgpt_comparisons)、[SHP](https://huggingface.co/datasets/stanfordnlp/SHP)
+
+## MOSS
+
+[代码仓库](https://github.com/OpenLMLab/MOSS)
+
+|   是否开源代码    | 是否开源训练数据  | 是否开源模型参数  | 训练数据大小 | 模型参数大小 |   训练设备   | 训练时长 |
+|:-----------:|:---------:|:---------:|:------:|:------:|:--------:|:----:|
+| 是（未开源预训练代码） | 是（还未全部开源） | 是（还未全部开源） |   未知   |  16B   | 未知 |  未知  |
+
+- MOSS目前开源了3个版本，moss-moon-003-base、moss-moon-003-sft和moss-moon-003-sft-plugin，另还有3个版本将在之后发布，持续关注
+- moss-moon-003-base是预训练模型，预训练自[CodeGen](https://github.com/salesforce/CodeGen)，[论文](https://arxiv.org/abs/2203.13474)，是在将近70B的中英文语料上预训练得到的，另外CodeGen是一个专门用来通过语言生成代码的模型，可能其代码语料充足，可能其推理能力很强
+- moss-moon-003-sft在moss-moon-003-base基础上经过110万多轮对话数据微调得到
+- moss-moon-003-sft-plugin这个比较有特色，是在moss-moon-003-base基础上经过110万多轮对话数据和30万插件增强的多轮对话数据上微调得到，在对话能力基础上还有使用搜索引擎、文生图、计算器、解方程等四种插件的能力
+- 微调数据都还未完全开源，持续关注，数据包含：moss-002-sft-data，说的是moss-002用的，moss-002并未开源，moss-003-sft-data，刚刚提到的110万对话数据，moss-003-sft-plugin-data刚刚提到的插件增强对话数据
 
 # 数据集整理
 
