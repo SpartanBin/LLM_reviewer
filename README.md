@@ -1,8 +1,13 @@
+# 目的
+
+- 2023-04-04: 为了建立自己领域的大语言模型（或者说为了加强大语言模型在自己领域的表现），而在做技术调研
+
 # 先写结论
 
 - 2023-04-18: 其实众多微调方法或框架使用技术都类似，且有一半小羊驼模型都微调自[LLaMA](#llama)，决定模型质量的因素主要是数据量、数据质量、算力成本，如果要制作自己专业领域的羊驼模型，个人认为应以LLaMA作为预训练模型，收集尽可能多的中英文语料（假设你的模型要部署到中文生产环境），对LLaMA做再训练，这一步如果效果不好，可以考虑用[ChatYuan](#chatyuan)替代，然后用[Task Tuning](#lmflow)和专业领域数据进行微调，最后收集指令微调数据，并进行指令微调，[LMFlow](#lmflow)和[DeepSpeed-Chat](#deepspeed-chat)都可以成为很好的微调框架
+- 2023-04-26: 建立自己领域的大语言模型，我们要做'Task Tuning'或许是因为我们的知识库太大，类型太庞杂，不太容易全部放进'一个prompt'中，因此要让LLM利用我们的知识，简单暴力的方法或许是微调，现在还有一种方案，是在prompt engineering上做功夫，如使用LlamaIndex或是LangChains，使得LLM与自己领域的知识库相关联，获得知识增强型的回答
 
-# 一些关于大语言模型的名词和实验现象
+# 一些关于大语言模型的名词和实验现象或是其他重要技术
 
 - Scaling (Training compute, FLOPs): 代表模型的规模，等于 α * model_size * training_tokens，α为系数，model_size为模型参数量，training_tokens为数据量（1000个tokens差不多为750个词语）
 - [Scaling laws](https://arxiv.org/abs/2001.08361): 如果你希望提升模型的表现，就必须增大Scaling (模型大小，数据大小，计算资源大小)，[open ai 的gpt-4技术报告](https://arxiv.org/abs/2303.08774)显示，模型的表现与训练时间的关系是可预测的，也就是说，在模型刚开始训练时，就可以知道模型最终训练结束的表现
@@ -11,6 +16,8 @@
 - RLHF对小Scaling是有害的，但对大Scaling是有益的，见[论文](https://arxiv.org/abs/2204.05862)
 - [The Inverse Scaling Prize](https://github.com/inverse-scaling/prize)提出了11种任务，这11种任务对于一般的大语言模型来说，都是随着Scaling增大，效果反而会变差的。[Inverse scaling can become U-shaped](https://arxiv.org/abs/2211.02011)发现如果使用[chain-of-thought prompting](https://arxiv.org/abs/2201.11903)（简单来说就是在给模型的提示中加入推理，让它‘分步思考’）可以使部分任务从随着Scaling变大一直变差，变为表现成U型，意思是先变差后变好
 - 对于哈尔滨工业大学的[ChatGPT 调研报告](https://github.com/DeepTecher/awesome-ChatGPT-resource-zh/blob/main/pdfs/230311-%E5%93%88%E5%B0%94%E6%BB%A8%E5%B7%A5%E4%B8%9A%E5%A4%A7%E5%AD%A6-ChatGPT%E8%B0%83%E7%A0%94%E6%8A%A5%E5%91%8A.pdf)内容小总结: 1. 报告里提到ChatGPT在Scaling达到一定尺度的情况下，效果出现激增，打破了Scaling laws的规律(线性增强)，认为是因为加入了很多代码作为训练语料，因代码语言的特性可以强化模型的推理(reason)能力，[论文](https://arxiv.org/abs/2211.09110)发现训练数据中含有代码的模型具有很强的语言推理能力，代码预训练与思维链Chain-of-Thought（COT）表现息息相关，在预训练时使用代码数据成为越来越多研究者的共识；2. GPT式的decoder模型的预训练方法相当于是对一句话中下个词语的预测(分类)，这种方式可以方便生成任意长度文本，这种方式类似Word2Vec在做词向量编码，可能其能够把不同语言的相同语义投影到高维空间中的相同位置；3. 指令精调是提示学习(Prompt Learning)的加强版，其作用在于让模型学习人类对话交互的模式（与人类行为‘对齐’），且能让他有能力泛化到没见过的分布中；4. RLHF是让模型了解人类的‘意图’，让模型的回答是人类希望看到的；5. 部署大模型的方式是模型并行、数据并行的混用；6. 提到Nvidia的[Megatron-LM](https://github.com/NVIDIA/Megatron-LM)和Microsoft的[DeepSpeed](https://github.com/microsoft/DeepSpeed)，应该都可以作为很好的部署框架；7. 在第四章提到巨量预训练数据集！！！；8. 提到构建指令精调数据集需要设计指令模板（针对不同任务），且覆盖不同类型的数据，逻辑推理任务标注时可以用COT，能够提高表现；9. 第五章提到评价方式，在需要评估自己的大模型时可以回来仔细参考
+- [LlamaIndex](https://github.com/jerryjliu/llama_index): LlamaIndex提供了一个数据连接给LLM，包含多种数据源格式（API, PDF, docs, SQL等），为非结构化的数据源提供索引，方便用户请求并结合LLM获得数据增强的输出结果，将数据源结构化，解决LLM token输入长度限制和文本分割的问题，详见[文档](https://gpt-index.readthedocs.io/en/latest/)
+- [LangChains](https://github.com/hwchase17/langchain): LangChains有多种功能，1.特定领域的检索增强（特定领域问答增强），也是为数据建立索引，2.优化对话记忆，建立聊天机器人，3.建立一个代理，让LLM去使用工具（包括arxiv、google search、wiki等），除此之外一些其他的应用案例，详见[文档](https://python.langchain.com/en/latest/)
 
 # 重要羊驼大模型发布时间表
 
