@@ -36,6 +36,7 @@
 - 2023-04-03 Berkeley Artificial Intelligence Research Lab (BAIR) of UC Berkeley发布[Koala](#koala)
 - 2023-04-06 微软研究院（Microsoft Research）发布[GPT-4-LLM](#gpt-4-llm)
 - 2023-04-12 微软发布[DeepSpeed-Chat](#deepspeed-chat)
+- 2023-04-19 Stability AI发布[StableLM](#stablelm)
 - 2023-04-21 复旦发布[MOSS](#moss)
 
 # 其他的一些羊驼大模型发布时间表和信息
@@ -244,6 +245,19 @@
 | 64x A100 80G  | 31 minutes    | 51 minutes     | 1.25 hrs ($320) | 4 hrs ($1024) | 7.5 hrs ($1920)    | 20 hrs ($5120) |
 
 以上RLHF训练使用了135M tokens的数据，由6个开源数据集组成[rm-static](https://huggingface.co/datasets/Dahoas/rm-static)、[full-hh-rlhf](https://huggingface.co/datasets/Dahoas/full-hh-rlhf)、[synthetic-instruct-gptj-pairwise](https://huggingface.co/datasets/Dahoas/synthetic-instruct-gptj-pairwise)、[rlhf-reward-datasets](https://huggingface.co/datasets/yitingxie/rlhf-reward-datasets)、[webgpt_comparisons](https://huggingface.co/datasets/openai/webgpt_comparisons)、[SHP](https://huggingface.co/datasets/stanfordnlp/SHP)
+
+## StableLM
+
+[代码仓库](https://github.com/Stability-AI/StableLM)
+
+| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数  | 训练数据大小 |  模型参数大小   |   训练设备   | 训练时长 |
+|:------:|:--------:|:---------:|:------:|:---------:|:--------:|:----:|
+|   否    |    否     | 是 |  800B  | 3B、7B、13B | 未知 |  未知  |
+
+- 13B的模型是微调自Vicuna-13B的，这个好像没有算在StableLM系列模型里
+- StableLM暂时发布了3B、7B版本，还剩15B、30B、65B、175B没发布
+- 训练数据构建自[The Pile](https://pile.eleuther.ai/)，数据量是The Pile的3倍，输入长度是4096 tokens
+- 除此之外还使用了5个微调数据集: Alpaca的，gpt4all的，[RyokoAI的ShareGPT52K](https://huggingface.co/datasets/RyokoAI/ShareGPT52K)，Dolly的，[Anthropic的HH](https://github.com/anthropics/hh-rlhf)
 
 ## MOSS
 
