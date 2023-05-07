@@ -28,6 +28,7 @@
 - 2023-03-13 Stanford发布[Alpaca](#alpaca)
 - 2023-03-14 Eric J. Wang（人肉了下，发现人在Stanford，什么身份不清楚）发布[Alpaca-LoRA](#alpaca-lora)
 - 2023-03-19 一个队伍（from UC Berkeley、CMU, Stanford, and UC San Diego）发布[Vicuna](#vicuna)
+- 2023-03-20 Nomic AI发布[GPT4All](#gpt4all)
 - 2023-03-23 元语智能发布[ChatYuan](#chatyuan)
 - 2023-03-25 Databricks发布[Dolly](#dolly)
 - 2023-03-27 哈工大科大讯飞联合实验室（HFL）发布 [Chinese-LLaMA-Alpaca](#chinese-llama-alpaca)
@@ -42,6 +43,7 @@
 - 2023-03-17 链家科技（Ke Technologies）发布[BELLE](https://github.com/LianjiaTech/BELLE)，目前已发布了ChatBELLE App一个支持MacOS的APP，已发布7B模型
 - 2023-03-23 Facico（Facico是他github的名字，可以确定的是他是个中国人，其他没人肉到任何信息）发布[Chinese-Vicuna](#chinese-vicuna)，使用[BELLE](https://github.com/LianjiaTech/BELLE)和[Guanaco](https://huggingface.co/datasets/JosephusCheung/GuanacoDataset)数据作为训练数据，开源7B、13B模型，提到之后会增加多轮对话数据
 - 2023-03-25 李煜东（人肉了下，发现是深圳大学博士生）发布[Chinese-ChatLLaMA](https://github.com/ydli-ai/Chinese-ChatLLaMA)，作者找来中英平行语料、中文维基、社区互动、新闻数据、科学文献等语料再进行预训练，作者还在持续收集更多中文语料数据，语料数据都开源，且还开源了33B和65B的大模型
+- 2023-04-20 [Lamini](https://lamini.ai/)(一个公司，CEO是斯坦福的)发布[lamini](https://github.com/lamini-ai/lamini)，购买了他们的许可后，可以调用他们的api训练模型，不用使用自己的设备，且他们提供了一个数据生成器，可以生成用来进行指令精调的数据
 
 # 重要羊驼大模型简介
 
@@ -117,6 +119,19 @@
 - 作者提到自己的13B模型已经达到了chatgpt 90%的能力水平，且和Alpaca对比生成的结果内容更丰富，结构更准确，但是和其他‘小’大模型一样，推理能力和数学能力不太行
 - 提到一个OpenAI的API [moderation](https://platform.openai.com/docs/guides/moderation/overview)可以用来过滤到用户的不恰当输入
 - 提供了一个在线与大语言模型对话的[demo](https://chat.lmsys.org/)，里面有Vicuna、Koala、Dolly、ChatGLM、Alpaca、LLaMA这几个模型
+
+## GPT4All
+
+[代码仓库](https://github.com/nomic-ai/gpt4all)
+
+| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数 | 训练数据大小 | 模型参数大小 |   训练设备   | 训练时长 |
+|:------:|:--------:|:--------:|:------:|:------:|:--------:|:----:|
+|   是    |    是     |    是     |  437k  | 多个版本，请看[报告](https://static.nomic.ai/gpt4all/2023_GPT4All-J_Technical_Report_2.pdf) | 8 * A100 |  未知  |
+
+- 微调了多个模型，最新的是微调自GPT-J的，所有都有完整的实验记录
+- 称自己的训练数据都是干净的高质量，包括代码、故事和对话
+- 提供了多个编译好的可执行程序，可直接在个人电脑上安装并使用
+- 在框架中融入了langchain
 
 ## ChatYuan
 
