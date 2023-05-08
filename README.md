@@ -27,7 +27,7 @@
 - 2023-03-13 清华数据挖掘研究团队（THUDM）发布[ChatGLM-6B](#chatglm-6b)
 - 2023-03-13 Stanford发布[Alpaca](#alpaca)
 - 2023-03-14 Eric J. Wang（人肉了下，发现人在Stanford，什么身份不清楚）发布[Alpaca-LoRA](#alpaca-lora)
-- 2023-03-19 一个队伍（from UC Berkeley、CMU, Stanford, and UC San Diego）发布[Vicuna](#vicuna)
+- 2023-03-19 LM-SYS（from UC Berkeley、CMU, Stanford, and UC San Diego）发布[FastChat](#fastchat)
 - 2023-03-20 Nomic AI发布[GPT4All](#gpt4all)
 - 2023-03-23 元语智能发布[ChatYuan](#chatyuan)
 - 2023-03-25 Databricks发布[Dolly](#dolly)
@@ -106,20 +106,23 @@
 - 该项目说自己的模型可与Alpaca相媲美甚至更好
 - 该项目后续更新了微软研究院的GPT4羊驼数据（[LLaMA-GPT4 dataset](https://github.com/Instruction-Tuning-with-GPT-4/GPT-4-LLM)），该数据的[论文](https://arxiv.org/abs/2304.03277)
 
-## Vicuna
+## FastChat
 
 [代码仓库](https://github.com/lm-sys/FastChat)
 
-| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数 | 训练数据大小 | 模型参数大小 |   训练设备   | 训练时长 |
-|:------:|:--------:|:--------:|:------:|:------:|:--------:|:----:|
-|   是    |    是     |    是     |  70k   | 7B、13B | 8 * A100 |  1天  |
+| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数 | 训练数据大小 |             模型参数大小              |   训练设备   | 训练时长 |
+|:------:|:--------:|:--------:|:------:|:-------------------------------:|:--------:|:----:|
+|   是    |    否     |    是     |  70k   | Vicuna: 7B、13B, FastChat-T5: 3B | 8 * A100 |  1天  |
 
+- 目前开源了2种模型，Vicuna先开源，随后开源FastChat-T5
 - Vicuna也是一个在LLaMA的基础上微调过来的模型，微调方式改进自Alpaca，主要有以下不同：1.Alpaca输入的上下文长度是512，改为2048；2.调整训练损失为多轮对话，并单独计算每个聊天机器人输出的微调损失；3.有使用压缩显存的计算和减少训练成本的技术，见[博客](https://vicuna.lmsys.org/)
-- 对话数据来源于[ShareGPT.com](https://sharegpt.com/)，这是一个gpt用户分享自己聊天对话的网站，又一个不错的数据源
+- 对话数据处理自[ShareGPT.com](https://sharegpt.com/)（这是一个gpt用户分享自己聊天对话的网站，又一个不错的数据源），不过并未分享自己处理后的数据，但是给了如何处理的代码
 - 作者提到他们的7B模型大概花费140美元的训练费，13B是300美元
 - 作者提到自己的13B模型已经达到了chatgpt 90%的能力水平，且和Alpaca对比生成的结果内容更丰富，结构更准确，但是和其他‘小’大模型一样，推理能力和数学能力不太行
 - 提到一个OpenAI的API [moderation](https://platform.openai.com/docs/guides/moderation/overview)可以用来过滤到用户的不恰当输入
 - 提供了一个在线与大语言模型对话的[demo](https://chat.lmsys.org/)，里面有Vicuna、Koala、Dolly、ChatGLM、Alpaca、LLaMA这几个模型
+- 给出了一个对话平台，可以往其中添加对话机器人，目前支持多个聊天机器人，详见仓库
+- 提供了一个验证的功能，可以用gpt4来评估模型的能力
 
 ## GPT4All
 
