@@ -34,6 +34,7 @@
 - 2023-03-27 哈工大科大讯飞联合实验室（HFL）发布 [Chinese-LLaMA-Alpaca](#chinese-llama-alpaca)
 - 2023-03-27 香港科技大学统计机器学习实验室（HKUST）发布 [LMFlow](#lmflow)
 - 2023-04-03 Berkeley Artificial Intelligence Research Lab (BAIR) of UC Berkeley发布[Koala](#koala)
+- 2023-04-04 加州大学（UC）发布[Baize](#baize)
 - 2023-04-06 微软研究院（Microsoft Research）发布[GPT-4-LLM](#gpt-4-llm)
 - 2023-04-08 港中文发布[LLMZoo](#llmzoo)
 - 2023-04-12 微软发布[DeepSpeed-Chat](#deepspeed-chat)
@@ -201,6 +202,18 @@
 
 - 首先Koala是基于EasyLM框架实现的（一个集成大语言模型的预训练、微调、验证功能的框架，且支持数百个显卡加速），Koala相当于是利用该框架和一些数据微调LLaMA得出来的模型
 - 数据来自多种渠道，详见[博客的Datasets and Training章节](https://bair.berkeley.edu/blog/2023/04/03/koala/)
+
+## Baize
+
+[代码仓库](https://github.com/project-baize/baize-chatbot)
+
+| 是否开源代码 |  是否开源训练数据   | 是否开源模型参数 | 训练数据大小 |   模型参数大小   |  训练设备  |    训练时长    |
+|:------:|:-----------:|:--------:|:------:|:----------:|:------:|:----------:|
+|  是  | 是 |    是     |   未知   | 7B、13B、30B | 1个A100 | 9h、16h、36h |
+
+- 使用LoRA技术，微调自LLaMA
+- 使用的数据是chatgpt自己与自己对话生成的，共111.5k，这些对话的问题是从 Quora4 (知乎) 和 Stack Overflow 的，也提供了收集这些生成数据的代码
+- 有一个专门的中文版即将开源
 
 ## GPT-4-LLM
 
