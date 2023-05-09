@@ -35,6 +35,7 @@
 - 2023-03-27 香港科技大学统计机器学习实验室（HKUST）发布 [LMFlow](#lmflow)
 - 2023-04-03 Berkeley Artificial Intelligence Research Lab (BAIR) of UC Berkeley发布[Koala](#koala)
 - 2023-04-06 微软研究院（Microsoft Research）发布[GPT-4-LLM](#gpt-4-llm)
+- 2023-04-08 港中文发布[LLMZoo](#llmzoo)
 - 2023-04-12 微软发布[DeepSpeed-Chat](#deepspeed-chat)
 - 2023-04-19 Stability AI发布[StableLM](#stablelm)
 - 2023-04-21 复旦发布[MOSS](#moss)
@@ -212,6 +213,47 @@
 - 微软研究院发布的小羊驼模型，目前只开源了数据，数据是中英双语的，持续关注中
 - 除了使用self-instruct tuning训练了一个小羊驼，还生成了一些比较数据（来自GPT3.5、4、OPT1.3B）来训练了一个打分模型（reward models），用这个打分模型去量化GPT4和小羊驼的差距
 
+## LLMZoo
+
+[代码仓库](https://github.com/FreedomIntelligence/LLMZoo)
+
+| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数 | 训练数据大小 |            模型参数大小            |   训练设备   | 训练时长 |
+|:------:|:--------:|:--------:|:------:|:----------------------------:|:--------:|:----:|
+|   是    |    是     |    是     |   未知   | Phoenix: 7B, Chimera: 7B、13B | 未知 |  未知  |
+
+- Phoenix微调自[BLOOMZ](https://huggingface.co/bigscience/bloom)，[论文](https://arxiv.org/abs/2211.05100)，是一个包含46种语言和13种程序语言的开源预训练模型
+- Chimera微调自LLaMA
+- 微调数据主要是指令数据和对话，共1.58GB
+- 提供了Phoenix、Chimera与其他LLM的对比结果: 
+
+| Evaluation by GPT4, Chinese                     | Ratio   |
+|-------------------------------------------------|---------|
+| Phoenix-inst-chat-7b vs. **ChatGPT**            | 85.2\%  |
+| Phoenix-inst-chat-7b vs. **ChatGLM-6b**         | 94.6\%  |
+| Phoenix-inst-chat-7b vs. **Baidu-Wenxin**       | 96.8\%  |
+| **Phoenix-inst-chat-7b** vs. MOSS-moon-003-sft  | 109.7\% |
+| **Phoenix-inst-chat-7b** vs. BELLE-7b-2m        | 122.7\% |
+| **Phoenix-inst-chat-7b** vs. Chinese-Alpaca-7b  | 135.3\% |
+| **Phoenix-inst-chat-7b** vs. Chinese-Alpaca-13b | 125.2\% |
+
+85.2\%代表Phoenix-inst-chat-7b达到了ChatGPT百分之85.2的表现
+
+| Evaluation by human, Chinese       | win | tie | lose  |
+|------------------------------------|:---:|:---:|:-----:|
+| Phoenix vs. **ChatGPT**            | 12  |  35 |  53   |
+| Phoenix vs. **ChatGLM-6b**         | 36  |  11 |  53   |
+| Phoenix vs. **Baidu-Wenxin**       | 29  |  25 |  46   |
+| **Phoenix** vs. BELLE-7b-2m        | 55  |  31 |  14   |
+| **Phoenix** vs. Chinese-Alpaca-13b | 56  |  31 |  13   |
+
+| Evaluation by GPT4, Chinese            | Ratio      |
+|----------------------------------------|------------|
+| Chimera-chat-7b vs.  **ChatGPT**       | 85.2\%     |
+| Chimera-chat-13b vs.  **ChatGPT**      | 92.6\%     |
+| Chimera-inst-chat-13b vs.  **ChatGPT** | **96.6\%** |
+
+效果很好，感觉这个模型和ChatGLM-6b都可以作为backbone
+
 ## DeepSpeed-Chat
 
 [代码仓库](https://github.com/microsoft/DeepSpeedExamples/tree/master/applications/DeepSpeed-Chat)
@@ -221,7 +263,7 @@
 |   是    |    否     |    否     |   未知   | 未知 | 未知 |  未知  |
 
 - 微软发布的微调框架，用[DeepSpeed](https://github.com/microsoft/DeepSpeed)实现了[论文InstructGPT](https://arxiv.org/abs/2203.02155)中的监督微调、奖励函数模型微调、强化学习人类反馈（Reinforcement Learning Human Feedback, RLHF），作者说微软研发的DeepSpeed可以显著加速训练（可达15倍速度），并且还可以显著加速推理，做到高吞吐量和低延迟
-- 目前支持以下预训练模型：
+- 目前支持以下预训练模型: 
 
 | model family                                                   | size range  |
 |----------------------------------------------------------------|-------------|
