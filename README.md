@@ -33,6 +33,7 @@
 - 2023-03-25 Databricks发布[Dolly](#dolly)
 - 2023-03-27 哈工大科大讯飞联合实验室（HFL）发布 [Chinese-LLaMA-Alpaca](#chinese-llama-alpaca)
 - 2023-03-27 香港科技大学统计机器学习实验室（HKUST）发布 [LMFlow](#lmflow)
+- 2023-03-29 HPC-AI Tech发布[ColossalChat](#colossalchat)
 - 2023-04-03 Berkeley Artificial Intelligence Research Lab (BAIR) of UC Berkeley发布[Koala](#koala)
 - 2023-04-04 加州大学（UC）发布[Baize](#baize)
 - 2023-04-06 微软研究院（Microsoft Research）发布[GPT-4-LLM](#gpt-4-llm)
@@ -189,6 +190,19 @@
 - 提供了作者训练并部署到线上的LLaMA羊驼模型给人免费试用
 - 目前支持三种微调方式Task Tuning（加强模型在专业领域，比如医疗，上的表现）、Instruction Tuning（就是指令精调，让模型学会遵循命令行事，我们常说的利用提示语prompt调教模型就是用指令精调得到的功能），Parameter-Efficient Tuning（就是HuggingFace的PEFT）
 - 作者运用Task Tuning（enhance a language model’s proficiency in a particular field）训练出来的LLaMA羊驼模型和ChatGPT、InstructGPT-175B等模型在医疗领域比了比，效果确实不错，并在MMLU（Massive Multitask Language Understanding）上测试了一下，发现在非领域知识回答上性能也没有太多下降
+
+## ColossalChat
+
+[代码仓库](https://github.com/hpcaitech/ColossalAI/tree/main/applications/Chat)
+
+| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数 | 训练数据大小 |     模型参数大小      |   训练设备   | 训练时长 |
+|:------:|:--------:|:--------:|:------:|:---------------:|:--------:|:----:|
+|   是    |    是     |    是     |  104k  | 7B、13B（都是LLaMA） | 未知 |  未知  |
+
+- 一个宣称实现了最接近原版RLHF的完整pipeline，用[ColossalAI](https://github.com/hpcaitech/ColossalAI)实现，和微软的DeepSpeed应该功能接近，都是分布式框架
+- 特别提到了用一张24G显存的卡，只要cpu内存够，就可以训练不仅是LoRA，甚至是原本微调（全部参数都参与梯度下降）的7B LLaMA，不过我看他此demo里batch size只有1...
+- 提供的数据是中英文双语数据，共104k
+- 目前仅支持LLaMA，正在添加其他大模型
 
 ## Koala
 
