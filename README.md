@@ -9,7 +9,7 @@
 
 # 一些关于大语言模型的名词和实验现象或是其他重要技术
 
-- Scaling (Training compute, FLOPs): 代表模型的规模，等于 α * model_size * training_tokens，α为系数，model_size为模型参数量，training_tokens为数据量（1000个tokens差不多为750个词语）
+- Scaling (Training compute, FLOPs): 代表模型的规模，等于 α * model_size * training_tokens，α为系数，model_size为模型参数量，training_tokens为数据量（1000个tokens大约包含750个词语）
 - [Scaling laws](https://arxiv.org/abs/2001.08361): 如果你希望提升模型的表现，就必须增大Scaling (模型大小，数据大小，计算资源大小)，[open ai 的gpt-4技术报告](https://arxiv.org/abs/2303.08774)显示，模型的表现与训练时间的关系是可预测的，也就是说，在模型刚开始训练时，就可以知道模型最终训练结束的表现
 - 有137种能力是大Scaling才有的，而小Scaling没有，见[博客](https://bounded-regret.ghost.io/emergent-deception-optimization/)，这种能力称为Emergent abilities，这种能力打破了Scaling laws
 - few-shot prompting（few-shot prompting是指给模型的输入中加入一些与当前模型要做的任务相似的例子）在小Scaling上没有什么用，但是在大Scaling上有用
@@ -19,6 +19,10 @@
 - [LlamaIndex](https://github.com/jerryjliu/llama_index): LlamaIndex提供了一个数据连接给LLM，包含多种数据源格式（API, PDF, docs, SQL等），为非结构化的数据源提供索引，方便用户请求并结合LLM获得数据增强的输出结果，将数据源结构化，解决LLM token输入长度限制和文本分割的问题，详见[文档](https://gpt-index.readthedocs.io/en/latest/)
 - [LangChains](https://github.com/hwchase17/langchain): LangChains有多种功能，1.特定领域的检索增强（特定领域问答增强），也是为数据建立索引，2.优化对话记忆，建立聊天机器人，3.建立一个代理，让LLM去使用工具（包括arxiv、google search、wiki等），除此之外一些其他的应用案例，详见[文档](https://python.langchain.com/en/latest/)
 - 对于Facebook的[LLMsPracticalGuide](https://arxiv.org/abs/2304.13712v2)及其[相关资源列表](https://github.com/Mooler0410/LLMsPracticalGuide)小结: 该综述主要是在比较LLM和‘传统微调’小模型在大部分自然语言任务上的优劣势，结果表明‘传统微调’小模型在某些任务上依然是合适且具有优势的，不过在模仿人类、聊天机器人、生成、知识密集型应用等任务上，大语言模型确实具有显著优势，个人认为，从对比结果的角度，或许可以把综述里的LLM视为GPT4等千亿万亿级参数模型，而把‘传统微调’小模型视为7B、13B等小羊驼模型。一些小细节（以下用小模型代指‘传统微调’小模型）: 1. LLM在只需要使用上下文知识的任务（比如阅读理解）中表现不佳；2. 在能够使用知识库检索的情况下，小模型是更好的选择；3. 实际应用中，out-of-distribution (OOD)情况较少，推荐小模型；4. 除了LoRA外，还提到了两种Parameter-Efficient Tuning技术[Prefix Tuning](https://arxiv.org/abs/2101.00190)和[P-Tuning](https://arxiv.org/abs/2110.07602)；5. 资源列表里给了很多预训练和fine tune用到的数据，给力!!!还列出了众多自然语言测试任务，可以做了解和参考
+
+# 其他
+
+- CLUEbenchmark发布[SuperCLUE](https://github.com/CLUEbenchmark/SuperCLUE)，[网页](https://www.cluebenchmarks.com/superclue.html)，一套中文通用大语言模型评价标准，目前测评了包括GPT-4、星火认知等未开源的超大LLM及ChatGLM、MOSS等开源羊驼LLM（ChatGLM-6B效果还不错，和LLMZoo得到了相似结论!!!），声称之后会开源评测数据集
 
 # 重要羊驼大模型发布时间表
 
