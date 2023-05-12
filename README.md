@@ -38,6 +38,7 @@
 - 2023-04-04 加州大学（UC）发布[Baize](#baize)
 - 2023-04-06 微软研究院（Microsoft Research）发布[GPT-4-LLM](#gpt-4-llm)
 - 2023-04-08 港中文发布[LLMZoo](#llmzoo)
+- 2023-04-09 LAION发布[Open-Assistant](#open-assistant)
 - 2023-04-12 微软发布[DeepSpeed-Chat](#deepspeed-chat)
 - 2023-04-19 Stability AI发布[StableLM](#stablelm)
 - 2023-04-21 复旦发布[MOSS](#moss)
@@ -280,6 +281,18 @@
 | Chimera-inst-chat-13b vs.  **ChatGPT** | **96.6\%** |
 
 效果很好，感觉这个模型和ChatGLM-6b都可以作为backbone
+
+## Open-Assistant
+
+[代码仓库](https://github.com/LAION-AI/Open-Assistant)
+
+| 是否开源代码 | 是否开源训练数据 | 是否开源模型参数 | 训练数据大小 |        模型参数大小        |   训练设备   | 训练时长 |
+|:------:|:--------:|:--------:|:------:|:--------------------:|:--------:|:----:|
+|   是    |    是     |    是     |   未知   | 多个（见[huggingface](https://huggingface.co/OpenAssistant)） | 未知 |  未知  |
+
+- Open-Assistant是一个2022年12月就发起的项目，包括集模型微调、RLHF、推理pipeline（命令行推理CLI、搭建聊天机器人）、知识增强型（访问数据库和搜索引擎）为一体的框架，以及还在不断填充的数据集，意在构建一个私人聊天机器人
+- 支持添加不同的预训练模型进行微调、RLHF和部署（还支持DeepSpeed），官方训练的例子是LLaMA、pythia、StableLM等
+- 包含多个数据集，在厂库的data路径下面可以查看数据集的下载和使用方式，另外指的注意的是，发布了一个人工生成和标注的对话数据[OpenAssistant Conversations (OASST1)](https://huggingface.co/datasets/OpenAssistant/oasst1)，包含了16万条消息和46万个人工标注评级（排序）覆盖35门语言
 
 ## DeepSpeed-Chat
 
